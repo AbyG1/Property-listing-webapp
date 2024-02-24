@@ -5,6 +5,8 @@ import Home from './Pages/Home'
 import Profile from './Pages/Profile'
 import Signin from './Pages/Signin'
 import SignUp from './Pages/SignUp'
+import Header from './Components/Header'
+
 
 
 
@@ -14,6 +16,7 @@ function App() {
   return (
     <>
      <BrowserRouter>
+          <Header></Header>
           <Routes>
               <Route path='/' element={<Home/>}></Route>
               <Route path='/sign-in' element={<Signin/>}></Route>
