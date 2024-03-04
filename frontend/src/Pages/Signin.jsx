@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signInFailure, signInStart, signInSuccess } from '../redux/user/userSlice';
+import OAuth from '../Components/OAuth';
 
 
 function SignIn() {
@@ -52,7 +53,8 @@ function SignIn() {
                         <TextField id="email" label="email" variant="filled" className='mb-3'onChange={handleChange}/>
                         <TextField id="password" type='password' label="password" variant="filled" className='mb-3'onChange={handleChange}/>
                       <div className=' mb-2 text-center'>
-                         <button disabled={loading} className='btn btn-danger w-100'>{ loading ? "Loading..." : 'SIGN IN'}</button>
+                         <button disabled={loading} className='p-3 btn btn-danger w-100'>{ loading ? "Loading..." : 'SIGN IN'}</button>
+                         <OAuth></OAuth>
                       </div>
                        
                     </form>

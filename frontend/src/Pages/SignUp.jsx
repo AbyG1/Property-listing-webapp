@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField';
 import { Link, useNavigate } from 'react-router-dom';
+import OAuth from '../Components/OAuth';
+
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -52,7 +54,8 @@ function SignUp() {
                         <TextField id="email" label="email" variant="filled" className='mb-3'onChange={handleChange}/>
                         <TextField id="password" type='password' label="password" variant="filled" className='mb-3'onChange={handleChange}/>
                       <div className=' mb-2 text-center'>
-                         <button disabled={loading} className='btn btn-danger w-100'>{ loading ? "Loading..." : 'SIGN UP'}</button>
+                         <button disabled={loading} className='p-3 btn btn-danger w-100'>{ loading ? "Loading..." : 'SIGN UP'}</button>
+                          <OAuth/>
                       </div>
                        
                     </form>
