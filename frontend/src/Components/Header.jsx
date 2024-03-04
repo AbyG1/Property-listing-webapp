@@ -68,7 +68,7 @@ function Header() {
                           className='rounded-pill'
                           src={currentUser.avatar}
                           alt='profile'
-                          style={{width:"25px"}}
+                          style={{width:"25px",objectFit:'cover'}}
                         />
                       ) : (
                         "Sign in"
@@ -92,14 +92,3 @@ function Header() {
 
 export default Header
 
-{/* <Link to='/profile'>
-            {currentUser ? (
-              <img
-                className='rounded-full h-7 w-7 object-cover'
-                src={currentUser.avatar}
-                alt='profile'
-              />
-            ) : (
-              <li className=' text-slate-700 hover:underline'> Sign in</li>
-            )}
-          </Link> */}
