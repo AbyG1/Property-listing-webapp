@@ -14,10 +14,10 @@ import {
   MDBCollapse,
 } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
-
-
+import { useSelector } from 'react-redux'
 function Header() {
     const [openBasic, setOpenBasic] = useState(false);
+    const {currentUser} = useSelector(state => state.user)
   return (
     <header>
             <MDBNavbar expand='lg' light className='bg-secondary'>
@@ -34,8 +34,16 @@ function Header() {
           <MDBIcon icon='bars' fas />
         </MDBNavbarToggler>
 
-        <MDBCollapse navbar open={openBasic}>
-          <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
+        <MDBCollapse navbar open={openBasic} >
+
+
+          <form className='d-flex input-group w-auto'>
+            <input type='search' className='form-control' placeholder='search...' aria-label='Search' />
+            <MDBBtn color='primary'><FaSearch/></MDBBtn>
+          </form>
+
+
+          <MDBNavbarNav className=' d-flex justify-content-end mb-2 mb-lg-0'>
             <Link to='/'>
                 <MDBNavbarItem>
                 <MDBNavbarLink active aria-current='page'>
@@ -50,19 +58,30 @@ function Header() {
                 </MDBNavbarItem>
             </Link>
            
-        <Link to="/sign-in">
+    
+
             <MDBNavbarItem>
-              <MDBNavbarLink>
-                Sign in
-              </MDBNavbarLink>
-            </MDBNavbarItem>
-        </Link>
+                  <Link to="/profile">
+                    <MDBNavbarLink>
+                      {currentUser ? (
+                        <img
+                          className='rounded-pill'
+                          src={currentUser.avatar}
+                          alt='profile'
+                          style={{width:"25px"}}
+                        />
+                      ) : (
+                        "Sign in"
+                      )}
+                    </MDBNavbarLink>
+                  </Link>
+          </MDBNavbarItem>
+
+
+
           </MDBNavbarNav>
 
-          <form className='d-flex input-group w-auto'>
-            <input type='search' className='form-control' placeholder='search...' aria-label='Search' />
-            <MDBBtn color='primary'><FaSearch/></MDBBtn>
-          </form>
+         
         </MDBCollapse>
       </MDBContainer>
     </MDBNavbar>
@@ -72,3 +91,15 @@ function Header() {
 }
 
 export default Header
+
+{/* <Link to='/profile'>
+            {currentUser ? (
+              <img
+                className='rounded-full h-7 w-7 object-cover'
+                src={currentUser.avatar}
+                alt='profile'
+              />
+            ) : (
+              <li className=' text-slate-700 hover:underline'> Sign in</li>
+            )}
+          </Link> */}
