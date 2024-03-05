@@ -15,9 +15,13 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signOutUserStart,
+  signOutUserSuccess,
+  signOutUserFailure,
   
 
 } from '../redux/user/userSlice';
+
 
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -110,20 +114,20 @@ export default function Profile() {
     }
   };
 
-  // const handleSignOut = async () => {
-  //   try {
-  //     dispatch(signOutUserStart());
-  //     const res = await fetch('/api/auth/signout');
-  //     const data = await res.json();
-  //     if (data.success === false) {
-  //       dispatch(deleteUserFailure(data.message));
-  //       return;
-  //     }
-  //     dispatch(deleteUserSuccess(data));
-  //   } catch (error) {
-  //     dispatch(deleteUserFailure(data.message));
-  //   }
-  // };
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch('/api/auth/signout');
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(data.message));
+    }
+  };
 
   // const handleShowListings = async () => {
   //   try {
@@ -196,7 +200,7 @@ export default function Profile() {
           </form>
           
           <div className='mb-3 '>
-            <button className='btn btn-danger w-100 p-3'>Sign Out</button>
+            <button className='btn btn-danger w-100 p-3' onClick={handleSignOut}>Sign Out</button>
             <p className='text-danger m-2'style={{cursor:"pointer"}} onClick={handleDeleteUser}>Delete User</p>
           </div>
           <p className='text-danger'>{error ? error : " "}</p>
