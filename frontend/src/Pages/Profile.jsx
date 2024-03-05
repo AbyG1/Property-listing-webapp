@@ -12,9 +12,13 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
   
 
 } from '../redux/user/userSlice';
+
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 export default function Profile() {
@@ -89,22 +93,22 @@ export default function Profile() {
     }
   };
 
-  // const handleDeleteUser = async () => {
-  //   try {
-  //     dispatch(deleteUserStart());
-  //     const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-  //       method: 'DELETE',
-  //     });
-  //     const data = await res.json();
-  //     if (data.success === false) {
-  //       dispatch(deleteUserFailure(data.message));
-  //       return;
-  //     }
-  //     dispatch(deleteUserSuccess(data));
-  //   } catch (error) {
-  //     dispatch(deleteUserFailure(error.message));
-  //   }
-  // };
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
 
   // const handleSignOut = async () => {
   //   try {
@@ -193,7 +197,7 @@ export default function Profile() {
           
           <div className='mb-3 '>
             <button className='btn btn-danger w-100 p-3'>Sign Out</button>
-            <p className='text-danger m-2'>Delete User</p>
+            <p className='text-danger m-2'style={{cursor:"pointer"}} onClick={handleDeleteUser}>Delete User</p>
           </div>
           <p className='text-danger'>{error ? error : " "}</p>
           <p className='text-success'>{updateSuccess ? 'User is updated successfully' : " "}</p>
