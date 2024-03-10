@@ -50,9 +50,9 @@ function SignUp() {
               
                     <h1 className='text-center'>Sign Up</h1>
                     <form onSubmit={handleSubmit} className='d-flex flex-column ' > 
-                        <TextField id="username" label="username" variant="filled" className='mb-3'onChange={handleChange}/>
-                        <TextField id="email" label="email" variant="filled" className='mb-3'onChange={handleChange}/>
-                        <TextField id="password" type='password' label="password" variant="filled" className='mb-3'onChange={handleChange}/>
+                        <TextField id="username" label="username" variant="outlined" className='mb-3'onChange={handleChange}/>
+                        <TextField id="email" label="email" variant="outlined" className='mb-3'onChange={handleChange}/>
+                        <TextField id="password" type='password' label="password" variant="outlined" className='mb-3'onChange={handleChange}/>
                       <div className=' mb-2 text-center'>
                          <button disabled={loading} className='p-3 btn btn-danger w-100'>{ loading ? "Loading..." : 'SIGN UP'}</button>
                           <OAuth/>

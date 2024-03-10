@@ -20,10 +20,10 @@ function Header() {
     const {currentUser} = useSelector(state => state.user)
   return (
     <header>
-            <MDBNavbar expand='lg' light className='bg-secondary'>
+            <MDBNavbar expand='lg' light className='bg-primary'>
       <MDBContainer fluid>
 
-        <MDBNavbarBrand ><span className="fw-bolder text-primary">Prime </span> <span className='fw-semibold'>Properties</span></MDBNavbarBrand>
+        <MDBNavbarBrand ><span className="fw-bolder text-secondary ">Prime </span> <span className='fw-semibold'>Properties</span></MDBNavbarBrand>
 
         <MDBNavbarToggler
           aria-controls='navbarSupportedContent'
@@ -46,23 +46,23 @@ function Header() {
           <MDBNavbarNav className=' d-flex justify-content-end mb-2 mb-lg-0'>
             <Link to='/'>
                 <MDBNavbarItem>
-                <MDBNavbarLink active aria-current='page'>
+                <MDBNavbarLink  aria-current='page'  className='text-light'>
                     Home
                 </MDBNavbarLink>
                 </MDBNavbarItem>
             </Link>
 
-            <Link to='/about'>
+            <Link to='/create-listing'>
                 <MDBNavbarItem>
-                    <MDBNavbarLink >About</MDBNavbarLink>
+                    <MDBNavbarLink className='text-light' >List Property</MDBNavbarLink>
                 </MDBNavbarItem>
             </Link>
            
     
 
-            <MDBNavbarItem>
+            <MDBNavbarItem className='text-light'>
                   <Link to="/profile">
-                    <MDBNavbarLink>
+                    <MDBNavbarLink className='text-light'>
                       {currentUser ? (
                         <img
                           className='rounded-pill'
