@@ -195,7 +195,9 @@ export default function Profile() {
                     loading ? 'Loading...' : "Update"
                   }
               </button>
-
+              <Link to={'/create-listing'} className='btn btn-primary p-3 mt-2'>
+                    Create Listing
+              </Link>
 
           </form>
           
