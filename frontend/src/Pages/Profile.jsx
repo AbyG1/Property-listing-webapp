@@ -129,21 +129,21 @@ export default function Profile() {
     }
   };
 
-  // const handleShowListings = async () => {
-  //   try {
-  //     setShowListingsError(false);
-  //     const res = await fetch(`/api/user/listings/${currentUser._id}`);
-  //     const data = await res.json();
-  //     if (data.success === false) {
-  //       setShowListingsError(true);
-  //       return;
-  //     }
+  const handleShowListings = async () => {
+    try {
+      setShowListingsError(false);
+      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const data = await res.json();
+      if (data.success === false) {
+        setShowListingsError(true);
+        return;
+      }
 
-  //     setUserListings(data);
-  //   } catch (error) {
-  //     setShowListingsError(true);
-  //   }
-  // };
+      setUserListings(data);
+    } catch (error) {
+      setShowListingsError(true);
+    }
+  };
 
   // const handleListingDelete = async (listingId) => {
   //   try {
@@ -196,7 +196,7 @@ export default function Profile() {
                   }
               </button>
               <Link to={'/create-listing'} className='btn btn-primary p-3 mt-2'>
-                    Create Listing
+                    Post Property
               </Link>
 
           </form>
@@ -207,6 +207,52 @@ export default function Profile() {
           </div>
           <p className='text-danger'>{error ? error : " "}</p>
           <p className='text-success'>{updateSuccess ? 'User is updated successfully' : " "}</p>
+            
+          <button className='btn btn-warning w-100 p-3' onClick={handleShowListings}>Show Property Listings</button>
+        
+          <p className='text-danger'>
+            {showListingsError ? 'Error showing listing':''}
+          </p>
+         
+          {userListings && userListings.length > 0 && (
+        <div className='d-flex flex-column gap-4'>
+          <h1 className='text-center mt-3  fs-bold'>
+            Your Listings
+          </h1>
+          {userListings.map((listing) => (
+            <div
+              key={listing._id}
+              className='border rounded p-3 d-flex justify-content-between align-items-center gap-4'
+            >
+              <Link to={`/listing/${listing._id}`}>
+                <img
+                  src={listing.imageUrls[0]}
+                  alt='listing cover'
+                  className='h-25 w-25 object-contain'
+                />
+              </Link>
+              <Link
+                className=' fw-bold  flex-1'
+                to={`/listing/${listing._id}`}
+              >
+                <p>{listing.name}</p>
+              </Link>
+
+              <div className='d-flex flex-column justify-item-center'>
+                <button
+                  onClick={() => handleListingDelete(listing._id)}
+                  className='text-danger btn btn-outline-danger p-2 '
+                >
+                  Delete
+                </button>
+                <Link to={`/update-listing/${listing._id}`}>
+                  <button className='text-success btn btn-outline-success'>Edit</button>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
         </div>
       </div>
     </div>
