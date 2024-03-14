@@ -31,7 +31,7 @@ function CreateListing() {
     ploatArea:0,
     length:0,
     width:0,
-    roadWidth:0,
+    roadWidth:0
   })
   console.log(formData)
 
@@ -323,9 +323,9 @@ function CreateListing() {
                               <label htmlFor="width" > ft</label>
                             </div>
                             <div className='d-flex align-items-center me-md-2 mb-1' >
-                              <label htmlFor="roadwidth" className='w-25'>Width of facing road</label>
-                              <input type="number" className='form-control w-50' onChange={handleChange}  id="roadwidth"  min="1" required />
-                              <label htmlFor="roadwidth" > ft</label>
+                              <label htmlFor="roadWidth" className='w-25'>Width of facing road</label>
+                              <input type="number" className='form-control w-50' onChange={handleChange}  id="roadWidth"  min="1" required />
+                              <label htmlFor="roadWidth" > ft</label>
                             </div>
 
                             </div>
