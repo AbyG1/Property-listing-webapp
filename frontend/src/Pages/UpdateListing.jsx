@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import image from '../assets/listProperty.gif'
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
 import {app} from '../firebase'
 import {useSelector} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 
-function CreateListing() {
+function UpdateListing() {
 
   const [imageUploadError, setImageUploadError] = useState(false);
   const [files,setFiles] = useState([])
@@ -33,7 +33,22 @@ function CreateListing() {
     width:0,
     roadWidth:0
   })
-  console.log(formData)
+  const params = useParams()
+
+  useEffect(() => {
+    const fetchListing = async () => {
+
+        const listingId = params.listingId
+        const res = await fetch(`/api/listing/get/${listingId}`)
+        const data = await res.json()
+        if(data.success === false){
+            console.log(data.message)
+            return
+        }
+        setFormData(data)
+    }
+    fetchListing()
+  }, [])
 
 
   const handleImageSubmit = (e) => {
@@ -120,6 +135,7 @@ function CreateListing() {
         e.target.type === 'number' ||
         e.target.type === 'text' ||
         e.target.type === 'textarea'
+       
       ) {
         setFormData({
           ...formData,
@@ -138,7 +154,7 @@ function CreateListing() {
           return setError('Discount price must be lower than regular price');
         setLoading(true);
         setError(false);
-        const res = await fetch('/api/listing/create', {
+        const res = await fetch(`/api/listing/update/${params.listingId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -161,39 +177,19 @@ function CreateListing() {
     };
 
 
-
+    console.log(formData)
 
   return (
     <main>
         <div className="container-fluid">
-          <div className="row my-3">
-              <div className="col-md-9">
-                  <p className='text-primary m-3 display-5'>Sell or Rent your property with <br /> <span className='fw-bolder text-secondary'>Prime</span> <span className='fw-bolder text-dark'>Properties</span></p>
-                  <li style={{listStyleType:"none"}} className="text-success mx-5 h3 fw-bolder"><i className="fa-sharp fa-solid fa-check  me-1"></i> Get unlimited enquires</li>
-                  <li style={{listStyleType:"none"}} className="text-success mx-5 h3 fw-bolder"><i className="fa-sharp fa-solid fa-check me-1"></i> Assistence in co-ordinating</li>
-                  <li style={{listStyleType:"none"}} className="text-success mx-5 h3 fw-bolder"><i className="fa-sharp fa-solid fa-check me-1"></i> Easy to upload</li>            
-
-              
-              </div>
-              <div className="col-md-3">
-                  <div className='card shadow p-4 ' style={{background:"#230B5B"}}>
-                          <p className='text-light fw-bolder'>Upload your properties in 3 simple steps</p> 
-                          <ul>
-                            <li className='text-light'  style={{listStyleType:"none"}}><i className="fa-solid fa-circle-info me-2"></i>Add basic details</li>
-                            <li className='text-light' style={{listStyleType:"none"}}><i className="fa-solid fa-money-bill me-2"></i>Add Pricing</li>
-                            <li className='text-light' style={{listStyleType:"none"}}><i className="fa-solid fa-photo-film me-1"></i>Add photos</li> 
-                        </ul>
-
-                  </div>
-              </div>
-          </div>
+          
           <div className="row py-5">
             <div className="col-md-6 ">
               <img src={image} alt="list-propety-gif" className='img-fluid'  />
             </div>
             <div className="col-md-6">
               <div className='card  p-3 ' style={{background:'#F6FBFF'}}>
-                  <h3 className='text-center'>Create Listing</h3>
+                  <h3 className='text-center'>Update Property Listing</h3>
                   <form onSubmit={handleSubmit}>
                             <div className='d-flex flex-column align-items-center'>
                                 <input onChange={handleChange} value={formData.name} type="text" placeholder='Name' id="name" className='form-control mb-2'/>
@@ -289,12 +285,12 @@ function CreateListing() {
                                     <div className='d-flex w-100  my-2'>
                                           <div className=' d-flex align-items-center mb-2'>
                                             <input type="number" onChange={handleChange}
-                                             className='form-control w-50 me-md-2' id="bedrooms" min="1" max="10" required/>
+                                             className='form-control w-50 me-md-2' id="bedrooms" min="1" max="10" value={formData.bedrooms} required/>
                                             <label htmlFor="bedrooms">Beds</label>
                                           </div >
                                           <div className=' d-flex align-items-center mb-2'>
                                             <input type="number"
-                                            onChange={handleChange} className='form-control w-50 me-md-2' id="bathrooms" min="1" max="10" required/>
+                                            onChange={handleChange} className='form-control w-50 me-md-2' id="bathrooms" min="1" max="10" value={formData.bathrooms} required/>
                                             <label htmlFor="bathrooms">Baths</label>
                                           </div>
                                     </div>
@@ -309,22 +305,22 @@ function CreateListing() {
 
                             <div className='d-flex align-items-center me-md-2 mb-1 '>
                                 <label htmlFor="plotArea" className='w-25'>PlotArea</label>
-                                <input type="number" onChange={handleChange}  className='form-control w-50' id="plotArea"  min="1" required />
+                                <input type="number" onChange={handleChange}  className='form-control w-50' value={formData.plotArea} id="plotArea"  min="1" required />
                                 <label htmlFor="plotArea">sqft</label>
                             </div>
                             <div className='d-flex align-items-center me-md-2 mb-1'>
                                 <label htmlFor="length" className='w-25'>Length</label>
-                                <input type="number" onChange={handleChange} className='form-control w-50' id="length"  min="1" required/>
+                                <input type="number" onChange={handleChange} className='form-control w-50' value={formData.length} id="length"  min="1" required/>
                                 <label htmlFor="length">ft</label>
                             </div>
                             <div className='d-flex align-items-center me-md-2 mb-1' >
                               <label htmlFor="width" className='w-25'>Width</label>
-                              <input type="number" onChange={handleChange}  className='form-control w-50' id="width"  min="1" required />
+                              <input type="number" onChange={handleChange} value={formData.width} className='form-control w-50' id="width"  min="1" required />
                               <label htmlFor="width" > ft</label>
                             </div>
                             <div className='d-flex align-items-center me-md-2 mb-1' >
                               <label htmlFor="roadWidth" className='w-25'>Width of facing road</label>
-                              <input type="number" className='form-control w-50' onChange={handleChange}  id="roadWidth"  min="1" required />
+                              <input type="number" className='form-control w-50' value={formData.roadWidth} onChange={handleChange}  id="roadWidth"  min="1" required />
                               <label htmlFor="roadWidth" > ft</label>
                             </div>
 
@@ -388,7 +384,7 @@ function CreateListing() {
 
                         </div>
 
-                        <button disabled={loading || uploading} className='btn btn-lg  btn-success w-100'>{loading ? 'Creating...' : 'Create listing'}</button>
+                        <button disabled={loading || uploading} className='btn btn-lg  btn-success w-100'>{loading ? 'Updating...' : 'Update listing'}</button>
                   
                         {error && <small className='text-danger'>{error}</small>}
                   </form>
@@ -405,4 +401,4 @@ function CreateListing() {
   )
 }
 
-export default CreateListing
+export default UpdateListing

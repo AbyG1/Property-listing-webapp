@@ -42,7 +42,7 @@ const listingSchema = new mongoose.Schema(
       type: Boolean,
       
     },
-    ploatarea:{
+    plotArea:{
       type:Number
     },
     length:{
