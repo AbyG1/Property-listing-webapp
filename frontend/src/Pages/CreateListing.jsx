@@ -269,6 +269,8 @@ function CreateListing() {
                                         
                                     </div>
 
+
+                                    {(formData.property)!=='rland' && (
                                     <div className='d-flex w-100 my-2'>
                                         <input type="checkbox"
                                          className="ms-md-2 me-md-1 "
@@ -285,6 +287,9 @@ function CreateListing() {
                                       
         
                                     </div>
+                                  )}
+
+
                                   {(formData.property)!=='rland' && (
                                     <div className='d-flex w-100  my-2'>
                                           <div className=' d-flex align-items-center mb-2'>
