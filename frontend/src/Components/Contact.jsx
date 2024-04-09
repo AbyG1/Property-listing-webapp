@@ -42,7 +42,7 @@ export default function Contact({ listing }) {
           ></textarea>
 
           <Link
-          className='border-success text-success text-center rounded'
+          className='btn btn-success'
           to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
           
           >
