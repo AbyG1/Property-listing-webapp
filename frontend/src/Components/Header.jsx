@@ -1,6 +1,6 @@
 
 import {FaSearch} from 'react-icons/fa'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MDBContainer,
   MDBNavbar,
@@ -13,12 +13,36 @@ import {
   MDBBtn,
   MDBCollapse,
 } from 'mdb-react-ui-kit';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 function Header() {
     const [openBasic, setOpenBasic] = useState(false);
     const {currentUser} = useSelector(state => state.user)
-  return (
+    const [searchTerm, setSearchTerm] = useState('')
+    const navigate = useNavigate()
+
+
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      const urlParams = new URLSearchParams(window.location.search)
+      urlParams.set('searchTerm', searchTerm)
+      const searchQuery = urlParams.toString()
+      navigate(`/search?${searchQuery}`)
+    }
+   
+    useEffect(() => {
+
+      const urlParams = new URLSearchParams(window.location.search)
+      const searchTermFromUrl = urlParams.get('searchTerm')
+      if(searchTermFromUrl){
+          setSearchTerm(searchTermFromUrl)
+      }
+
+    },[location.search])
+   
+   
+   
+    return (
     <header>
             <MDBNavbar expand='lg' light className='bg-primary'>
       <MDBContainer fluid>
@@ -37,11 +61,11 @@ function Header() {
         <MDBCollapse navbar open={openBasic} >
 
 
-          <form className='d-flex input-group w-auto'>
-            <input type='search' className='form-control' placeholder='search...' aria-label='Search' />
-            <MDBBtn color='primary'><FaSearch/></MDBBtn>
+          <form onSubmit={handleSubmit} className='d-flex input-group w-auto'>
+            <input type='search' className='form-control' placeholder='search...' aria-label='Search' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+            <MDBBtn color='light'><FaSearch/></MDBBtn>
           </form>
-
+      
 
           <MDBNavbarNav className=' d-flex justify-content-end mb-2 mb-lg-0'>
             <Link to='/'>
