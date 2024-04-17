@@ -92,7 +92,7 @@ export const getListings = async (req, res, next) => {
 
     let property = req.query.property;
 
-    if (property === undefined || property ==="all"){
+    if (property === undefined || property ==="allproperty"){
         property = { $in: ['house', 'apartment','rland']}
     }
 
