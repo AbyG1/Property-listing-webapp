@@ -1,7 +1,8 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import ListingItem from '../components/ListingItem';
+import ListingItem from '../Components/ListingItem';
+
 
 function Search() {
   const navigate = useNavigate();
@@ -89,7 +90,7 @@ function Search() {
         if (
           e.target.id === 'all' ||
           e.target.id === 'rent' ||
-          e.target.id === 'sale'
+          e.target.id === 'sell'
         ) {
           setSidebardata({ ...sidebardata, type: e.target.id });
         }
@@ -144,7 +145,7 @@ function Search() {
     <>
       <div className="container-fluid">
         <div className="row">
-            <div className="col-md-4 border border-2">
+            <div className="col-md-4 ">
             <form onSubmit={handleSubmit} className='d-flex flex-column px-2 py-3'>
                   <div className='d-flex pb-2 align-items-center '>
                     <label className='fw-bold'>
@@ -223,10 +224,10 @@ function Search() {
                       <div className='d-flex gap-2'>
                         <input
                           type='checkbox'
-                          id='sale'
+                          id='sell'
                           
                           onChange={handleChange}
-                          checked={sidebardata.type === 'sale'}
+                          checked={sidebardata.type === 'sell'}
                         />
                         <span>Sale</span>
                       </div>
@@ -283,9 +284,34 @@ function Search() {
                     </button>
                   </form>
             </div>
-            <div className="col-md-8">
+            <div className="col-md-8  border-start border-4">
                <div>
                 <h1 className="display-5">Listings</h1>
+                      <div>
+                        {!loading && listings.length === 0 && (
+                          <p className='fw-bold pt-5 ps-2'>No listing found</p>
+                        )}
+                        {loading && (
+                            <p className='text-center display-5'>Loading...</p>
+                        )}
+                    
+                        <div className="row px-2">
+                          
+                            
+                                {
+                                !loading && listings && listings.map((listing) => (
+                                  <ListingItem key={listing._id} listing={listing}/>
+                                ))
+                                }
+                          </div>                          
+                          
+                       
+
+                      
+                        
+
+
+                      </div>
                 </div>
             </div>
 
@@ -299,8 +325,7 @@ export default Search
 
 
 
-// export default function Search() {
-//   
+  
 
 
 
