@@ -6,13 +6,13 @@ export default function ListingItem({ listing }) {
     
 
     <div className="col-md-4 mb-2">
-        <Card className='h-100'>
+        <Card style={{"height":"500px"}}>
         <Link to={`/listing/${listing._id}`} >
       <Card.Img variant="top"  src={
             listing.imageUrls[0] ||
             'https://53.fs1.hubspotusercontent-na1.net/hub/53/hubfs/Sales_Blog/real-estate-business-compressor.jpg?width=595&height=400&name=real-estate-business-compressor.jpg'
           }
-          alt='listing cover' />
+          alt='listing cover' style={{"height":"250px"}} />
       <Card.Body>
         <Card.Title className='text-success'>{listing.name}</Card.Title>
         <Card.Text className='text-success'>
